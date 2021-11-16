@@ -19,12 +19,12 @@ const double epsilon = 1;
 const double mas = 1;
 
 const int skolko_vivodid = 500;
-const int kolvo_oper = 10; //количество операций между выводами
+const int kolvo_oper = 10; //РєРѕР»РёС‡РµСЃС‚РІРѕ РѕРїРµСЂР°С†РёР№ РјРµР¶РґСѓ РІС‹РІРѕРґР°РјРё
 
 const double Size = 5;
-const double R_cut = 3; //максимальная, дистанция взаимодействия частиц
+const double R_cut = 3; //РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ, РґРёСЃС‚Р°РЅС†РёСЏ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ С‡Р°СЃС‚РёС†
 
-const double V_koef = 5; //максимальная скорость
+const double V_koef = 5; //РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ
 const double dt = 0.001;
 
 const int max_N_for_Maxwell = 50;
@@ -52,7 +52,7 @@ const double R_for_radial_function = 4;
 const double delta_R_for_radial_function  = R_for_radial_function / N_for_radial_function;
 
 
-const double efectiv_R_cut = max(R_cut, R_for_radial_function); //! нужно только для подсчета следующей формулы
+const double efectiv_R_cut = max(R_cut, R_for_radial_function); //! РЅСѓР¶РЅРѕ С‚РѕР»СЊРєРѕ РґР»СЏ РїРѕРґСЃС‡РµС‚Р° СЃР»РµРґСѓСЋС‰РµР№ С„РѕСЂРјСѓР»С‹
 const int N_for_R_cut = (Size * int(efectiv_R_cut/Size) == efectiv_R_cut) ? int(efectiv_R_cut/Size) : int(efectiv_R_cut/Size) + 1;
 
 //!--------------------------[STRUCT DOT]--------------------------------
@@ -177,7 +177,7 @@ void start_condition(dot* m){
     double* pos = new double[3];
     double* speed = new double[3];
 
-    int process[9] = {int(N*0.1), int(N*0.2), int(N*0.3), int(N*0.4), int(N*0.5), int(N*0.6), int(N*0.7), int(N*0.8), int(N*0.9)}; //чисто для красоты
+    int process[9] = {int(N*0.1), int(N*0.2), int(N*0.3), int(N*0.4), int(N*0.5), int(N*0.6), int(N*0.7), int(N*0.8), int(N*0.9)}; //С‡РёСЃС‚Рѕ РґР»СЏ РєСЂР°СЃРѕС‚С‹
 
     for(int i = 0; i < N; i++)
     {
@@ -523,17 +523,17 @@ public:
     dot* a;
     dot* b;
 
-    //--------[ДЛЯ МАКСВЕЛЛА]-------------------------------------
+    //--------[Р”Р›РЇ РњРђРљРЎР’Р•Р›Р›Рђ]-------------------------------------
     bool MakeMaxwell = 0;
     int skolo_bilo_Maxwell = 0;
     unsigned int Maxwell[max_N_for_Maxwell];
     double max_V_2;
 
-    //--------[ДЛЯ РАДИАЛЬНОЙ ФУНКЦИИ РАСПРЕДЕЛЕНИЯ]--------------
+    //--------[Р”Р›РЇ Р РђР”РРђР›Р¬РќРћР™ Р¤РЈРќРљР¦РР Р РђРЎРџР Р•Р”Р•Р›Р•РќРРЇ]--------------
     bool MakeRadial = 0;
     int skolo_bilo_Radial = 0;
     unsigned int Radial_function[N_for_radial_function];
-    double R_pow_2_radial_function[N_for_radial_function + 1]; //границы для квадратов радиусов
+    double R_pow_2_radial_function[N_for_radial_function + 1]; //РіСЂР°РЅРёС†С‹ РґР»СЏ РєРІР°РґСЂР°С‚РѕРІ СЂР°РґРёСѓСЃРѕРІ
 };
 
 
@@ -676,8 +676,6 @@ int main()
 
 
     triangle_condition(old);
-    //if(N == 4) create_tetraidr(old);
-      //  else start_condition(old);
 
 
     CalculatePair updater(old);
@@ -697,7 +695,7 @@ int main()
         for(int j = 0; j < 3; j++)
             delta_pos[i][j] = 0;
 
-    double begin_V[N][3]; //! ЗАПИСЬ АКФС ИДЕТ ПАРАЛЕЛЬНО С Sred_r_2
+    double begin_V[N][3]; //! Р—РђРџРРЎР¬ РђРљР¤РЎ РР”Р•Рў РџРђР РђР›Р•Р›Р¬РќРћ РЎ Sred_r_2
 
 
     int firssssst = 0;
@@ -717,10 +715,7 @@ int main()
 
 
 
-        //updater.recalculate_(); //!добавил отсебятину, можно удалить эту строчку безболезнено
-
-
-        int step = (K%kolvo_oper == 0) ? skolko_vivodid - K/kolvo_oper : 0; //step пробегает от 1 до skolko_vivodid
+        int step = (K%kolvo_oper == 0) ? skolko_vivodid - K/kolvo_oper : 0; //step РїСЂРѕР±РµРіР°РµС‚ РѕС‚ 1 РґРѕ skolko_vivodid
 
         if(step == 300) {
             check_sred_r_2 = 1;
@@ -766,11 +761,10 @@ int main()
 
     }
 
-    //for(int i = 0; i < skolko_vivodid; i++) cout << massiv_for_V_max[i] << endl;
+    
 
 
     delete[] old;
-    //delete[] now;
 
     return 0;
 }
